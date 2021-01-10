@@ -68,7 +68,7 @@ Pastikan Anda sudah menginstall dependencies dibawah ini sesuai dengan versinya
 ## Contributing rules
 1. Pastikan Anda selalu pull upstream main sebelum mulai ngoding
    ```bash
-   git pull upstream main
+   git pull upstream dev
    ```
 2. Pastikan pull request Anda mengarah ke branch dev (bukan main)
 3. Pastikan kode sudah dirapikan sebelum pull request. Jika berantakan tidak akan diterima
