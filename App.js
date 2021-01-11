@@ -1,12 +1,18 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+
+import RootStackNavigation from './navigations/RootStackNavigation'
 
 export default function App () {
   return (
-    <View>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <RootStackNavigation />
+      </NavigationContainer>
+
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaProvider>
   )
 }
