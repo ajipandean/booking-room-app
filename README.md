@@ -20,12 +20,16 @@ Pastikan Anda sudah menginstall dependencies dibawah ini sesuai dengan versinya
   node --version 
   // v12.18.0
   ```
-  Note: versi node yang aman digunakan untuk membuka projek ini adalah mulai dari v12.x.x sampai v14.x.x
+  Note: 
+  * Jika belum download node. Silakan download di [website official nodejs](https://nodejs.org/en/download/)
+  * Versi node yang aman digunakan untuk membuka projek ini adalah v12.x.x
 * npm
   ```bash
   npm --version 
   // v6.14.8
   ```
+  Note:
+  * npm akan diinstall bersamaan dengan node. Jika sudah install node harusnya npm juga sudah terinstall
 * expo
   ```bash
   # install expo secara global
@@ -35,7 +39,9 @@ Pastikan Anda sudah menginstall dependencies dibawah ini sesuai dengan versinya
   expo --version 
   // v4.0.17
   ```
-  Note: jika versi expo kurang dari v4.0.17. Silakan untuk install expo secara global untuk memperbaharui
+  Note: 
+  * Jika versi expo kurang dari v4.0.17. Silakan untuk install expo secara global untuk memperbaharui
+  * Jangan lupa juga untuk install aplikasi Expo versi terbaru di smartphone Anda
 
 ### Installation
 1. Fork repositori ini ke repositori Anda (klik tombol fork yang ada di pojok kanan atas)
@@ -74,7 +80,7 @@ Pastikan Anda sudah menginstall dependencies dibawah ini sesuai dengan versinya
 3. Pastikan kode sudah dirapikan sebelum pull request. Jika berantakan tidak akan diterima
 4. Pull request yang mengarah ke branch main tidak akan diterima dan harus pull request ulang
 
-## Contributing roadmap
+## Contributing tasks
 - [ ] koding halaman login
 - [ ] koding halaman register user
 - [ ] koding halaman beranda
