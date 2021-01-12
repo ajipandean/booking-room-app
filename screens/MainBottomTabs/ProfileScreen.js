@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, Text, StyleSheet } from 'react-native'
 
-export default function RegisterScreen () {
+export default function ProfileScreen () {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -11,7 +11,7 @@ export default function RegisterScreen () {
 
   return (
     <ScrollView style={styles.container}>
-      <Text>Register screen</Text>
+      <Text>Profile screen</Text>
     </ScrollView>
   )
 }
