@@ -30,12 +30,7 @@ export default function MainBottomTabsNavigation () {
   return (
     <Navigator
       tabBarOptions={{
-        style: {
-          height: 56,
-          elevation: 0,
-          borderTopLeftRadius: 24,
-          borderTopRightRadius: 24
-        },
+        style: { height: 56 },
         labelStyle: { fontWeight: 'bold' },
         labelPosition: 'beside-icon',
         activeTintColor: '#001b39',
