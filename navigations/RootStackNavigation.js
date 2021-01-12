@@ -2,10 +2,10 @@ import React from 'react'
 import { Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
+import MainBottomTabsNavigation from './MainBottomTabsNavigation'
+
 import LoginScreen from '../screens/Auth/LoginScreen'
 import RegisterScreen from '../screens/Auth/RegisterScreen'
-
-import MainBottomTabsNavigation from './MainBottomTabsNavigation'
 
 const { Navigator, Screen } = createStackNavigator()
 
