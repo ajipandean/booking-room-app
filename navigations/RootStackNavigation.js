@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import LoginScreen from '../screens/Auth/LoginScreen'
 import RegisterScreen from '../screens/Auth/RegisterScreen'
 
+import MainBottomTabsNavigation from './MainBottomTabsNavigation'
+
 const { Navigator, Screen } = createStackNavigator()
 
 const screens = [
@@ -17,12 +19,17 @@ const screens = [
     name: 'register',
     component: RegisterScreen,
     options: {}
+  },
+  {
+    name: 'main-bottom-tabs',
+    component: MainBottomTabsNavigation,
+    options: {}
   }
 ]
 
 export default function RootStackNavigation () {
   return (
-    <Navigator>
+    <Navigator initialRouteName="main-bottom-tabs">
       {screens.map((s, i) => (
         <Screen
           key={s.name}
