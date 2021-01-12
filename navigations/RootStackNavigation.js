@@ -29,7 +29,9 @@ const screens = [
 
 export default function RootStackNavigation () {
   return (
-    <Navigator initialRouteName="main-bottom-tabs">
+    <Navigator
+      screenOptions={{ headerShown: false }}
+    >
       {screens.map((s, i) => (
         <Screen
           key={s.name}
