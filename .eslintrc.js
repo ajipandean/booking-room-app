@@ -4,11 +4,7 @@ module.exports = {
     es2020: true,
     node: true
   },
-  extends: [
-    'prettier',
-    'plugin:react/recommended',
-    'standard'
-  ],
+  extends: ['prettier', 'plugin:react/recommended', 'standard'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -16,9 +12,9 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module'
   },
-  plugins: [
-    'react'
-  ],
+  plugins: ['react'],
   rules: {
+    'react/display-name': 'off',
+    'react/prop-types': 'off'
   }
 }

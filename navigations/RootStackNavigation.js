@@ -1,5 +1,4 @@
 import React from 'react'
-import { Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import MainBottomTabsNavigation from './MainBottomTabsNavigation'
@@ -29,9 +28,7 @@ const screens = [
 
 export default function RootStackNavigation () {
   return (
-    <Navigator
-      screenOptions={{ headerShown: false }}
-    >
+    <Navigator screenOptions={{ headerShown: false }}>
       {screens.map((s, i) => (
         <Screen
           key={s.name}
