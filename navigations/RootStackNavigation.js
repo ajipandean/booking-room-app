@@ -43,10 +43,7 @@ const rootStackScreens = [
 
 export default function RootStackNavigation () {
   return (
-    <Navigator
-      initialRouteName="create-booking"
-      screenOptions={{ headerShown: false }}
-    >
+    <Navigator screenOptions={{ headerShown: false }}>
       {authScreens.map(s => (
         <Screen
           key={s.name}
