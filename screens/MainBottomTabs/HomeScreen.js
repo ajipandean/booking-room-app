@@ -4,7 +4,8 @@ import {
   ScrollView, 
   Text, 
   StyleSheet, 
-  Image 
+  Image, 
+  TouchableOpacity
 } from 'react-native'
 
 import banner from '../../assets/primakara.jpg'
@@ -39,17 +40,63 @@ export default function HomeScreen () {
       color: colors.surface,
       width: 255,
       fontWeight: 'bold'
+    },
+    borderCategory: {
+      backgroundColor: 'white',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      paddingVertical: 8,
+      marginTop: 20,
+      marginLeft: 33,
+      borderTopLeftRadius: 100,
+      borderBottomLeftRadius: 100
+    },
+    category: {
+      paddingVertical: 6,
+      paddingHorizontal: 20,
+      borderRadius: 100,
+      elevation: 8,
+      backgroundColor: 'white',
+      marginHorizontal: 9
+    },
+    categoryText: {
+      fontSize: 15,
+      color: '#3B91CF'
     }
   })
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+
       <View style={styles.imgWrapper}>
         <Image source={banner} style={styles.img} />
-          <Text style={styles.imgText}>
-            Pinjam Fasilitas Kampus
-          </Text>
+        <Text style={styles.imgText}>
+          Pinjam Fasilitas Kampus
+        </Text>
       </View>
+
+      {/* borderCategory */}
+      <View style={styles.borderCategory}>
+        <TouchableOpacity style={styles.category}>
+          <Text style={styles.categoryText}>
+              Meeting
+          </Text>
+        </TouchableOpacity>
+
+        {/* category */}
+        <TouchableOpacity style={styles.category}>
+          <Text style={styles.categoryText}>
+              Seminar
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.category}>
+          <Text style={styles.categoryText}>
+              Workshop
+          </Text>
+        </TouchableOpacity>
+      </View>
+
     </ScrollView>
   )
 }
