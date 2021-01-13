@@ -43,7 +43,7 @@ const rootStackScreens = [
 
 export default function RootStackNavigation () {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
+    <Navigator initialRouteName="main-bottom-tabs" screenOptions={{ headerShown: false }}>
       {authScreens.map(s => (
         <Screen
           key={s.name}
