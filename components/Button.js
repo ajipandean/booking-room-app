@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
 import useTheme from '../hooks/useTheme'
 
-export default function Button ({ text, bgColor, textColor }) {
+export default function Button ({ text, bgColor, textColor, onPress }) {
   const { colors } = useTheme()
 
   const styles = StyleSheet.create({
@@ -18,7 +18,7 @@ export default function Button ({ text, bgColor, textColor }) {
   })
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   )

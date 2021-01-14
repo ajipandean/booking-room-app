@@ -10,6 +10,9 @@ import Button from '../../components/Button'
 
 export default function CreateBookingScreen () {
   const { colors } = useTheme()
+
+  const [bookingPurpose, setBookingPurpose] = useState('')
+  const [additionalTools, setAdditionalTools] = useState('')
   const [startDateTime, setStartDateTime] = useState(new Date())
   const [endDateTime, setEndDateTime] = useState(new Date())
 
@@ -76,7 +79,12 @@ export default function CreateBookingScreen () {
         </Text>
 
         <View>
-          <InputField height={42} placeholder="Tujuan peminjaman" />
+          <InputField
+            height={42}
+            placeholder="Tujuan peminjaman"
+            value={bookingPurpose}
+            onChangeText={value => setBookingPurpose(value)}
+          />
           <InputDateTimePicker
             spacedTop
             icon="calendar"
@@ -102,12 +110,26 @@ export default function CreateBookingScreen () {
             paddingVertical={12}
             textAlignVertical="top"
             placeholder="Alat tambahan seperti: Mic, sound"
+            value={additionalTools}
+            onChangeText={value => setAdditionalTools(value)}
           />
         </View>
       </View>
 
       <View style={{ paddingHorizontal: 16, marginTop: 24 }}>
-        <Button text="Ajukan pinjaman" textColor="primary" bgColor="warning" />
+        <Button
+          text="Ajukan pinjaman"
+          textColor="primary"
+          bgColor="warning"
+          onPress={() =>
+            console.log(
+              bookingPurpose,
+              additionalTools,
+              startDateTime,
+              endDateTime
+            )
+          }
+        />
       </View>
     </ScrollView>
   )
