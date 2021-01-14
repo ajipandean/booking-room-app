@@ -6,7 +6,7 @@ import useTheme from '../hooks/useTheme'
 export default function InputField (props) {
   const { colors } = useTheme()
 
-  const { height, paddingVertical, textAlignVertical } = props
+  const { height, paddingVertical, textAlignVertical, spacedTop } = props
 
   return (
     <TextInput
@@ -18,7 +18,10 @@ export default function InputField (props) {
         backgroundColor: colors.surface,
         borderRadius: 12,
         paddingHorizontal: 12,
-        fontSize: 16
+        fontSize: 16,
+        color: 'black',
+        flex: 1,
+        marginTop: spacedTop ? 12 : 0
       }}
     />
   )

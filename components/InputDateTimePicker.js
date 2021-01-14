@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import Moment from 'moment'
@@ -12,7 +12,10 @@ export default function InputDateTimePicker ({
   setDateTime,
   pickerMode,
   placeholder,
-  spacedTop
+  spacedTop,
+  label,
+  icon,
+  textFormat
 }) {
   const { colors } = useTheme()
   const [showPicker, setShowPicker] = useState(false)
@@ -23,10 +26,16 @@ export default function InputDateTimePicker ({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between'
+    },
+    label: {
+      color: colors.surface,
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 8
     }
   })
 
-  const formattedDate = date => Moment(date).format('LL')
+  const formattedDate = date => Moment(date).format(textFormat)
 
   const handlePickerOnChange = (event, selectedDateTime) => {
     const currentDateTime = selectedDateTime || dateTime
@@ -36,6 +45,7 @@ export default function InputDateTimePicker ({
 
   return (
     <View style={styles.container}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <View style={styles.inner_top}>
         <InputField
           height={42}
@@ -45,11 +55,11 @@ export default function InputDateTimePicker ({
           value={formattedDate(dateTime)}
         />
         <TouchableOpacity
-          style={{ marginLeft: 12 }}
+          style={{ marginLeft: 8 }}
           onPress={() => setShowPicker(true)}
         >
           <MaterialCommunityIcons
-            name="calendar"
+            name={icon}
             size={24}
             color={colors.surface}
           />
@@ -60,7 +70,6 @@ export default function InputDateTimePicker ({
         <DateTimePicker
           value={dateTime}
           mode={pickerMode}
-          is24Hour={true}
           display="default"
           minimumDate={new Date()}
           onChange={handlePickerOnChange}
