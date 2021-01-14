@@ -13,7 +13,7 @@ export default function RoomMeta ({ icon, stats, label, margined }) {
       borderRadius: 12,
       paddingVertical: 12,
       paddingHorizontal: 16,
-      marginTop: margined ? 12 : 0
+      marginTop: margined ? 16 : 0
     },
     inner_top: {
       flexDirection: 'row',
@@ -22,7 +22,7 @@ export default function RoomMeta ({ icon, stats, label, margined }) {
     },
     stats: {
       color: colors.primary,
-      fontSize: 22,
+      fontSize: 18,
       fontWeight: 'bold',
       marginLeft: 12
     }
