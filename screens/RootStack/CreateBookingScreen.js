@@ -10,9 +10,8 @@ import Button from '../../components/Button'
 
 export default function CreateBookingScreen () {
   const { colors } = useTheme()
-  const [date, setDate] = useState(new Date())
-  const [startTime, setStartTime] = useState(new Date())
-  const [endTime, setEndTime] = useState(new Date())
+  const [startDateTime, setStartDateTime] = useState(new Date())
+  const [endDateTime, setEndDateTime] = useState(new Date())
 
   const metas = [
     {
@@ -81,31 +80,21 @@ export default function CreateBookingScreen () {
           <InputDateTimePicker
             spacedTop
             icon="calendar"
-            label="Tanggal peminjaman"
-            dateTime={date}
-            setDateTime={setDate}
-            pickerMode="date"
-            textFormat="LL"
+            label="Tanggal pinjam"
+            dateTime={startDateTime}
+            setDateTime={setStartDateTime}
+            textFormat="llll"
+            minimumDate={new Date()}
           />
-          <View style={{ flexDirection: 'row' }}>
-            <InputDateTimePicker
-              icon="clock-outline"
-              label="Waktu pinjam"
-              dateTime={startTime}
-              setDateTime={setStartTime}
-              pickerMode="time"
-              textFormat="LT"
-            />
-            <View style={{ marginHorizontal: 8 }} />
-            <InputDateTimePicker
-              icon="clock-outline"
-              label="Waktu selesai"
-              dateTime={endTime}
-              setDateTime={setEndTime}
-              pickerMode="time"
-              textFormat="LT"
-            />
-          </View>
+          <InputDateTimePicker
+            spacedTop
+            icon="calendar"
+            label="Tanggal selesai"
+            dateTime={endDateTime}
+            setDateTime={setEndDateTime}
+            textFormat="llll"
+            minimumDate={startDateTime}
+          />
           <InputField
             multiline
             spacedTop

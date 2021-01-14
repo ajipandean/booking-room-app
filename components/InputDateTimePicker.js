@@ -10,15 +10,16 @@ import useTheme from '../hooks/useTheme'
 export default function InputDateTimePicker ({
   dateTime,
   setDateTime,
-  pickerMode,
   placeholder,
   spacedTop,
   label,
   icon,
-  textFormat
+  textFormat,
+  minimumDate
 }) {
   const { colors } = useTheme()
   const [showPicker, setShowPicker] = useState(false)
+  const [pickerMode, setPickerMode] = useState('date')
 
   const styles = StyleSheet.create({
     container: { flex: 1, marginTop: 12 },
@@ -38,9 +39,23 @@ export default function InputDateTimePicker ({
   const formattedDate = date => Moment(date).format(textFormat)
 
   const handlePickerOnChange = (event, selectedDateTime) => {
-    const currentDateTime = selectedDateTime || dateTime
-    setShowPicker(false)
-    setDateTime(currentDateTime)
+    if (event.type === 'dismissed') {
+      setShowPicker(false)
+      setPickerMode('date')
+    } else {
+      if (pickerMode === 'date') {
+        const currentDateTime = selectedDateTime || dateTime
+        setShowPicker(false)
+        setDateTime(currentDateTime)
+        setPickerMode('time')
+        setShowPicker(true)
+      } else {
+        const currentDateTime = selectedDateTime || dateTime
+        setShowPicker(false)
+        setDateTime(currentDateTime)
+        setPickerMode('date')
+      }
+    }
   }
 
   return (
@@ -71,7 +86,7 @@ export default function InputDateTimePicker ({
           value={dateTime}
           mode={pickerMode}
           display="default"
-          minimumDate={new Date()}
+          minimumDate={minimumDate}
           onChange={handlePickerOnChange}
         />
       )}
