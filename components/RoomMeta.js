@@ -4,16 +4,25 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import useTheme from '../hooks/useTheme'
 
-export default function RoomMeta ({ icon, stats, label, margined }) {
+export default function RoomMeta ({
+  icon,
+  stats,
+  label,
+  spacedTop,
+  width,
+  spacedLeft
+}) {
   const { colors } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
+      width: width || 'auto',
       backgroundColor: colors.surface,
       borderRadius: 12,
       paddingVertical: 12,
       paddingHorizontal: 16,
-      marginTop: margined ? 16 : 0
+      marginTop: spacedTop ? 16 : 0,
+      marginLeft: spacedLeft ? 16 : 0
     },
     inner_top: {
       flexDirection: 'row',
