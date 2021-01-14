@@ -24,7 +24,7 @@ export default function RoomMeta ({ icon, stats, label, margined }) {
       color: colors.primary,
       fontSize: 18,
       fontWeight: 'bold',
-      marginLeft: 12
+      marginLeft: 8
     }
   })
 
