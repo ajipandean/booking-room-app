@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import MainBottomTabsNavigation from './MainBottomTabsNavigation'
 
+import useTheme from '../hooks/useTheme'
 import LoginScreen from '../screens/Auth/LoginScreen'
 import RegisterScreen from '../screens/Auth/RegisterScreen'
 import RoomDetailScreen from '../screens/RootStack/RoomDetailScreen'
@@ -37,13 +38,27 @@ const rootStackScreens = [
   {
     name: 'create-booking',
     component: CreateBookingScreen,
-    options: {}
+    options: {
+      headerTitle: null,
+      headerShown: true
+    }
   }
 ]
 
 export default function RootStackNavigation () {
+  const { colors } = useTheme()
+
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: colors.primary
+        },
+        headerTintColor: colors.surface
+      }}
+    >
       {authScreens.map(s => (
         <Screen
           key={s.name}

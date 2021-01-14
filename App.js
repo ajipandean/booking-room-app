@@ -12,7 +12,7 @@ export default function App () {
         <RootStackNavigation />
       </NavigationContainer>
 
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </SafeAreaProvider>
   )
 }
