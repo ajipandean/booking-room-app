@@ -32,7 +32,6 @@ export default function CreateBookingScreen () {
       flex: 1,
       backgroundColor: colors.primary
     },
-    primary_text: { color: colors.primary },
     white_text: { color: colors.surface },
     title: { fontSize: 36, fontWeight: 'bold', marginBottom: 16 },
     subtitle: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 }
