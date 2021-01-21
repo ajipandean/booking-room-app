@@ -79,12 +79,14 @@ Pastikan Anda sudah menginstall dependencies dibawah ini sesuai dengan versinya
 2. Pastikan pull request Anda mengarah ke branch dev (bukan main)
 3. Pastikan kode sudah dirapikan sebelum pull request. Jika berantakan tidak akan diterima
 4. Pull request yang mengarah ke branch main tidak akan diterima dan harus pull request ulang
+5. Workspace Anda selaku contributor hanyalah folder screens dan components. Tidak lebih dari itu
 
 ## Contributing tasks
 - [ ] koding halaman login
 - [ ] koding halaman register user
 - [ ] koding halaman beranda
-- [ ] koding halaman detail ruangan
+- [x] koding halaman detail ruangan
+- [x] koding halaman booking form
 - [ ] koding halaman profil user
 - [ ] konek api halaman login
 - [ ] konek api halaman register user
