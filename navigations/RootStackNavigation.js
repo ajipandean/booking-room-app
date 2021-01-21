@@ -33,7 +33,10 @@ const rootStackScreens = [
   {
     name: 'room-detail',
     component: RoomDetailScreen,
-    options: {}
+    options: {
+      headerTitle: null,
+      headerShown: true
+    }
   },
   {
     name: 'create-booking',
