@@ -1,10 +1,12 @@
 import React from 'react'
+import {useNavigation} from '@react-navigation/native'
 import { ScrollView, Text, StyleSheet, View, Image, TextInput, TouchableOpacity } from 'react-native'
 
 import useTheme from '../../hooks/useTheme'
 
 export default function LoginScreen () {
   const { colors } = useTheme()
+  const navigation = useNavigation()
 
   const styles = StyleSheet.create({
     container: {
@@ -35,7 +37,7 @@ export default function LoginScreen () {
       borderRadius: 24,
       paddingHorizontal: 25,
       color: colors.surface,
-      marginBottom: 18,
+      marginBottom: 15,
     },
 
     loginBtn: {
@@ -76,15 +78,14 @@ export default function LoginScreen () {
             placeholder="nim"
             placeholderTextColor={colors.surface}
         />
-        <View style={styles.inputView}>
-          <TextInput
+
+        <TextInput
             secureTextEntry
             style={styles.inputText}
             placeholder="password"
             placeholderTextColor={colors.surface}
           />
-
-        </View>
+        
         <TouchableOpacity style={styles.loginBtn}>
           <Text style={styles.loginText}>Masuk</Text>
         </TouchableOpacity>
@@ -93,6 +94,9 @@ export default function LoginScreen () {
           <Text style={styles.textBody}>Belum punya akun? </Text>
           <Text
             style={[styles.textBody, { color: colors.secondary}]}
+            onPress={() => 
+              navigation.navigate('register')
+            }
           >
             Daftar          
           </Text>
