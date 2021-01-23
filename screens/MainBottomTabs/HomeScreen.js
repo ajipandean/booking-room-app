@@ -5,8 +5,7 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  ImageBackground
+  TouchableOpacity
 } from 'react-native'
 
 import banner from '../../assets/primakara.jpg'
@@ -31,7 +30,9 @@ export default function HomeScreen() {
     img: {
       width: '100%',
       height: '100%',
-      resizeMode: 'cover'
+      resizeMode: 'cover',
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
     },
     imgText: {
       position: 'absolute',
@@ -67,9 +68,6 @@ export default function HomeScreen() {
     roomText: {
       color: 'white',
       marginLeft: 20
-    },
-    img: {
-      zIndex: 0,
     },
     transparnBar: {
       width: '100%',
