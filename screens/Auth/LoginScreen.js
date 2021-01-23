@@ -1,6 +1,14 @@
 import React from 'react'
-import {useNavigation} from '@react-navigation/native'
-import { ScrollView, Text, StyleSheet, View, Image, TextInput, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity 
+} from 'react-native'
 
 import useTheme from '../../hooks/useTheme'
 
@@ -15,19 +23,16 @@ export default function LoginScreen () {
       justifyContent: 'center',
       backgroundColor: colors.primary
     },
-  
     image:{
       height: 153,
       width: 146,
     },
-  
     textTitle:{
       fontSize: 22,
       fontWeight: 'bold',
       color: colors.surface,
       margin: 20,
     },
-
     inputText: {
       fontSize:18,
       height: 50,
@@ -39,7 +44,6 @@ export default function LoginScreen () {
       color: colors.surface,
       marginBottom: 15,
     },
-
     loginBtn: {
       width: "90%",
       backgroundColor: colors.secondary,
@@ -48,8 +52,7 @@ export default function LoginScreen () {
       width: 300,
       alignItems: "center",
       marginBottom: 5,
-   },
-
+    },
     loginText: {
       fontSize: 18,
       fontWeight: 'bold',
@@ -57,14 +60,13 @@ export default function LoginScreen () {
       paddingTop: 12,
       paddingBottom: 12
     },
-  
     textBody:{
       fontSize:15,
       marginBottom: 15,
       color: colors.surface
     },
   })
-
+ 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
@@ -72,19 +74,20 @@ export default function LoginScreen () {
           source={require("../../assets/logo.png")}
           style={styles.image}
         />
+  
         <Text style={styles.textTitle}>Pinjam Fasilitas</Text>
-        <TextInput
-            style={styles.inputText}
-            placeholder="nim"
-            placeholderTextColor={colors.surface}
-        />
 
         <TextInput
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="password"
-            placeholderTextColor={colors.surface}
-          />
+          style={styles.inputText}
+          placeholder="nim"
+          placeholderTextColor={colors.surface}
+        />
+        <TextInput
+          secureTextEntry
+          style={styles.inputText}
+          placeholder="password"
+          placeholderTextColor={colors.surface}
+        />
         
         <TouchableOpacity style={styles.loginBtn}>
           <Text style={styles.loginText}>Masuk</Text>
@@ -94,9 +97,7 @@ export default function LoginScreen () {
           <Text style={styles.textBody}>Belum punya akun? </Text>
           <Text
             style={[styles.textBody, { color: colors.secondary}]}
-            onPress={() => 
-              navigation.navigate('register')
-            }
+            onPress={() => navigation.navigate('register')}
           >
             Daftar          
           </Text>
