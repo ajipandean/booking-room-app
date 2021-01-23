@@ -5,8 +5,7 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableOpacity,
-  BackgroundImage
+  TouchableOpacity
 } from 'react-native'
 
 import useTheme from '../../hooks/useTheme'
