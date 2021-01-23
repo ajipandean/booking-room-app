@@ -67,7 +67,6 @@ export default function HomeScreen () {
     roomText: {
       color: 'white',
       marginLeft: 20
-
     }
   })
 
