@@ -138,7 +138,7 @@ export default function ProfileScreen() {
       height: 35,
       marginRight: 38,
       marginLeft: 38,
-      marginVertical: 40
+      marginVertical: 45
     },
     statusIconSuccess: {
       zIndex: 9,
