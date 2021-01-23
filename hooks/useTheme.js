@@ -1,4 +1,4 @@
-export default function useTheme () {
+export default function useTheme() {
   return {
     colors: {
       primary: '#001b39',

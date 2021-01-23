@@ -48,11 +48,12 @@ const rootStackScreens = [
   }
 ]
 
-export default function RootStackNavigation () {
+export default function RootStackNavigation() {
   const { colors } = useTheme()
 
   return (
     <Navigator
+      initialRouteName="main-bottom-tabs"
       screenOptions={{
         headerShown: false,
         headerStyle: {

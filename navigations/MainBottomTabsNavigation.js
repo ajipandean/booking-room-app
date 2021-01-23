@@ -26,9 +26,10 @@ const screens = [
   }
 ]
 
-export default function MainBottomTabsNavigation () {
+export default function MainBottomTabsNavigation() {
   return (
     <Navigator
+      initialRouteName="profile"
       tabBarOptions={{
         style: { height: 56 },
         labelStyle: { fontWeight: 'bold' },

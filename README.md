@@ -87,7 +87,7 @@ Pastikan Anda sudah menginstall dependencies dibawah ini sesuai dengan versinya
 - [ ] koding halaman beranda
 - [x] koding halaman detail ruangan
 - [x] koding halaman booking form
-- [ ] koding halaman profil user
+- [x] koding halaman profil user
 - [ ] konek api halaman login
 - [ ] konek api halaman register user
 - [ ] konek api halaman beranda

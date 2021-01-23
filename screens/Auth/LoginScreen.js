@@ -3,7 +3,7 @@ import { ScrollView, Text, StyleSheet } from 'react-native'
 
 import useTheme from '../../hooks/useTheme'
 
-export default function LoginScreen () {
+export default function LoginScreen() {
   const { colors } = useTheme()
 
   const styles = StyleSheet.create({
