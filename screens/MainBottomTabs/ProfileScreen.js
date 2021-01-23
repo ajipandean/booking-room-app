@@ -11,7 +11,7 @@ import {
 import useTheme from '../../hooks/useTheme'
 
 export default function ProfileScreen() {
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -96,6 +96,66 @@ export default function ProfileScreen() {
       alignSelf: 'center',
       borderRadius: 20,
     },
+    statusIconBarDanger: {
+      backgroundColor: 'red',
+      width: 100,
+      height: 135,
+      zIndex: 8,
+      marginTop: -135,
+      marginRight: -240,
+      borderTopLeftRadius: 50,
+      borderBottomLeftRadius: 50,
+      borderTopRightRadius: 20,
+      borderBottomRightRadius: 20,
+    },
+    statusIconBarWaiting: {
+      backgroundColor: 'orange',
+      width: 100,
+      height: 135,
+      zIndex: 8,
+      marginTop: -135,
+      marginRight: -240,
+      borderTopLeftRadius: 50,
+      borderBottomLeftRadius: 50,
+      borderTopRightRadius: 20,
+      borderBottomRightRadius: 20,
+    },
+    statusIconBarSuccess: {
+      backgroundColor: '#00C2FF',
+      width: 100,
+      height: 135,
+      zIndex: 8,
+      marginTop: -135,
+      marginRight: -240,
+      borderTopLeftRadius: 50,
+      borderBottomLeftRadius: 50,
+      borderTopRightRadius: 20,
+      borderBottomRightRadius: 20,
+    },
+    statusIconDanger: {
+      zIndex: 9,
+      width: 35,
+      height: 35,
+      marginRight: 38,
+      marginLeft: 38,
+      marginVertical: 40
+    },
+    statusIconSuccess: {
+      zIndex: 9,
+      width: 35,
+      height: 35,
+      marginRight: 38,
+      marginLeft: 38,
+      marginVertical: 50
+    },
+    statusIconWaiting: {
+      zIndex: 9,
+      width: 35,
+      height: 35,
+      marginRight: 38,
+      marginLeft: 38,
+      marginVertical: 50
+    },
     transparnBar: {
       paddingVertical: 0,
       width: 340,
@@ -107,7 +167,6 @@ export default function ProfileScreen() {
       borderRadius: 20
     },
     textContent: {
-      borderWidth: 2,
       zIndex: 4,
       marginTop: -120,
       marginLeft: -120,
@@ -165,6 +224,9 @@ export default function ProfileScreen() {
               <Image source={require('../../assets/image.jpg')} resizeMode="cover" style={styles.cardImg} />
             </View>
             <View style={styles.transparnBar} />
+            <View style={styles.statusIconBarWaiting}>
+              <Image source={require('../../assets/queue.png')} style={styles.statusIconWaiting} />
+            </View>
             <View style={styles.textContent}>
               <Text style={styles.h2}>Judul</Text>
               <Text style={styles.h3}>Sub Judul</Text>
@@ -175,12 +237,14 @@ export default function ProfileScreen() {
             </View>
           </TouchableOpacity>
 
-
           <TouchableOpacity style={styles.barContent}>
             <View style={styles.cardImgWrapper}>
               <Image source={require('../../assets/image.jpg')} resizeMode="cover" style={styles.cardImg} />
             </View>
             <View style={styles.transparnBar} />
+            <View style={styles.statusIconBarSuccess}>
+              <Image source={require('../../assets/check.png')} style={styles.statusIconSuccess} />
+            </View>
             <View style={styles.textContent}>
               <Text style={styles.h2}>Judul</Text>
               <Text style={styles.h3}>Sub Judul</Text>
@@ -196,6 +260,9 @@ export default function ProfileScreen() {
               <Image source={require('../../assets/image.jpg')} resizeMode="cover" style={styles.cardImg} />
             </View>
             <View style={styles.transparnBar} />
+            <View style={styles.statusIconBarDanger}>
+              <Image source={require('../../assets/reject.png')} style={styles.statusIconDanger} />
+            </View>
             <View style={styles.textContent}>
               <Text style={styles.h2}>Judul</Text>
               <Text style={styles.h3}>Sub Judul</Text>
@@ -205,6 +272,7 @@ export default function ProfileScreen() {
               <Text style={styles.statusTextDanger}>Tidak Disetujui</Text>
             </View>
           </TouchableOpacity>
+
         </View>
       </View>
     </ScrollView >
