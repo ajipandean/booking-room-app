@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import MainBottomTabsNavigation from './MainBottomTabsNavigation'
 
+import useTheme from '../hooks/useTheme'
 import LoginScreen from '../screens/Auth/LoginScreen'
 import RegisterScreen from '../screens/Auth/RegisterScreen'
 import RoomDetailScreen from '../screens/RootStack/RoomDetailScreen'
@@ -32,18 +33,39 @@ const rootStackScreens = [
   {
     name: 'room-detail',
     component: RoomDetailScreen,
-    options: {}
+    options: {
+      headerTitle: null,
+      headerShown: true
+    }
   },
   {
     name: 'create-booking',
     component: CreateBookingScreen,
-    options: {}
+    options: {
+      headerTitle: null,
+      headerShown: true
+    }
   }
 ]
 
 export default function RootStackNavigation () {
+  const { colors } = useTheme()
+
   return (
+<<<<<<< HEAD
     <Navigator initialRouteName="main-bottom-tabs" screenOptions={{ headerShown: false }}>
+=======
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: colors.primary
+        },
+        headerTintColor: colors.surface
+      }}
+    >
+>>>>>>> ea58cb1e81c25b8d399b47d625c2e2a5499b92a8
       {authScreens.map(s => (
         <Screen
           key={s.name}
