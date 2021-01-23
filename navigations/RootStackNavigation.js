@@ -53,6 +53,7 @@ export default function RootStackNavigation() {
 
   return (
     <Navigator
+      initialRouteName="main-bottom-tabs"
       screenOptions={{
         headerShown: false,
         headerStyle: {
