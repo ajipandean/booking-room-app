@@ -52,9 +52,6 @@ export default function RootStackNavigation () {
   const { colors } = useTheme()
 
   return (
-<<<<<<< HEAD
-    <Navigator initialRouteName="main-bottom-tabs" screenOptions={{ headerShown: false }}>
-=======
     <Navigator
       screenOptions={{
         headerShown: false,
@@ -65,7 +62,6 @@ export default function RootStackNavigation () {
         headerTintColor: colors.surface
       }}
     >
->>>>>>> ea58cb1e81c25b8d399b47d625c2e2a5499b92a8
       {authScreens.map(s => (
         <Screen
           key={s.name}
