@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   ScrollView,
@@ -7,14 +7,25 @@ import {
   View,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ToastAndroid
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import useTheme from '../../hooks/useTheme'
+import AuthContext from '../../contexts/AuthContext'
 
 export default function RegisterScreen () {
   const { colors } = useTheme()
   const navigation = useNavigation()
+
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [nim, setNim] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setLoading] = useState(false)
+
+  const context = useContext(AuthContext)
 
   const styles = StyleSheet.create({
     container: {
@@ -23,18 +34,18 @@ export default function RegisterScreen () {
       justifyContent: 'center',
       backgroundColor: colors.primary
     },
-    image:{
+    image: {
       height: 153,
-      width: 146,
+      width: 146
     },
-    textTitle:{
+    textTitle: {
       fontSize: 22,
       fontWeight: 'bold',
       color: colors.surface,
-      margin: 20,
+      margin: 20
     },
     inputText: {
-      fontSize:18,
+      fontSize: 18,
       height: 50,
       width: 300,
       borderWidth: 5,
@@ -42,77 +53,107 @@ export default function RegisterScreen () {
       borderRadius: 24,
       paddingHorizontal: 25,
       color: colors.surface,
-      marginBottom: 10,
+      marginBottom: 10
     },
     loginBtn: {
-      width: "90%",
       backgroundColor: colors.secondary,
       borderRadius: 11,
       height: 50,
       width: 300,
-      alignItems: "center",
+      alignItems: 'center',
       marginTop: 5,
-      marginBottom: 5,
+      marginBottom: 5
     },
     loginText: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: colors.surface,  
+      color: colors.surface,
       paddingTop: 12,
       paddingBottom: 12
     },
-    textBody:{
-      fontSize:15,
+    textBody: {
+      fontSize: 15,
       marginBottom: 15,
       color: colors.surface
-    },
+    }
   })
+
+  const handleRegister = async () => {
+    setLoading(true)
+    try {
+      const pushToken = await AsyncStorage.getItem('pushToken')
+      const isComplete = await context.register({
+        email,
+        name,
+        nim,
+        password,
+        notification_token: pushToken
+      })
+
+      if (isComplete) {
+        navigation.navigate('login')
+      } else {
+        throw new Error('Failed to register')
+      }
+    } catch (err) {
+      ToastAndroid.show(err.message, ToastAndroid.LONG)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.container}>
-        <Image
-          source={require("../../assets/logo.png")}
-          style={styles.image}
-        />
+      <View style={{ alignItems: 'center' }}>
+        <Image source={require('../../assets/logo.png')} style={styles.image} />
         <Text style={styles.textTitle}>Pinjam Fasilitas</Text>
 
         <TextInput
+          value={email}
+          onChangeText={v => setEmail(v)}
           style={styles.inputText}
           placeholder="email"
-          placeholderTextColor={colors.surface}
+          placeholderTextColor="#aaa"
         />
         <TextInput
+          value={name}
+          onChangeText={v => setName(v)}
           style={styles.inputText}
           placeholder="nama"
-          placeholderTextColor={colors.surface}
+          placeholderTextColor="#aaa"
         />
         <TextInput
+          value={nim}
+          onChangeText={v => setNim(v)}
           style={styles.inputText}
           placeholder="nim"
-          placeholderTextColor={colors.surface}
+          placeholderTextColor="#aaa"
         />
         <TextInput
           secureTextEntry
+          value={password}
+          onChangeText={v => setPassword(v)}
           style={styles.inputText}
           placeholder="password"
-          placeholderTextColor={colors.surface}
+          placeholderTextColor="#aaa"
         />
 
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>Daftar</Text>
+        <TouchableOpacity style={styles.loginBtn} onPress={handleRegister}>
+          <Text style={styles.loginText}>
+            {isLoading ? 'Mohon menunggu...' : 'Daftar'}
+          </Text>
         </TouchableOpacity>
 
-        <View style={{ flexDirection: "row", marginVertical: 5 }}>
+        <View style={{ flexDirection: 'row', marginVertical: 5 }}>
           <Text style={styles.textBody}>Sudah punya akun? </Text>
           <Text
-            style={[styles.textBody, { color: colors.secondary}]}
+            style={[styles.textBody, { color: colors.secondary }]}
             onPress={() => navigation.navigate('login')}
           >
-            Masuk          
+            Masuk
           </Text>
         </View>
-      </View>    
+      </View>
     </ScrollView>
   )
 }
