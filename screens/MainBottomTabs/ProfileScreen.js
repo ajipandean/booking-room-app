@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   ScrollView,
   Text,
@@ -9,9 +9,13 @@ import {
 } from 'react-native'
 
 import useTheme from '../../hooks/useTheme'
+import AuthContext from '../../contexts/AuthContext'
 
-export default function ProfileScreen() {
+export default function ProfileScreen () {
   const { colors } = useTheme()
+
+  const context = useContext(AuthContext)
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -22,7 +26,7 @@ export default function ProfileScreen() {
     backgroundContainer: {
       flex: 1,
       width: null,
-      height: null,
+      height: null
     },
     profileContainer: {
       marginTop: 100,
@@ -38,14 +42,14 @@ export default function ProfileScreen() {
       borderRadius: 100
     },
     name: {
-      color: "white",
+      color: 'white',
       fontSize: 26,
       fontWeight: 'bold',
       marginHorizontal: 100,
-      marginTop: 4,
+      marginTop: 4
     },
     nim: {
-      color: "white",
+      color: 'white',
       fontSize: 16,
       marginHorizontal: 100,
       marginTop: 4,
@@ -57,7 +61,7 @@ export default function ProfileScreen() {
     subTittle: {
       marginTop: 20,
       marginBottom: 20,
-      marginLeft: -180,
+      marginLeft: -180
     },
     h2: {
       fontSize: 20,
@@ -70,7 +74,7 @@ export default function ProfileScreen() {
     },
     contentList: {
       marginTop: 15,
-      marginBottom: 55,
+      marginBottom: 55
     },
     barContent: {
       marginBottom: 10,
@@ -78,7 +82,7 @@ export default function ProfileScreen() {
       height: 135,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 20,
+      borderRadius: 20
     },
     cardsWrapper: {
       height: 135,
@@ -95,7 +99,7 @@ export default function ProfileScreen() {
       height: 135,
       width: 340,
       alignSelf: 'center',
-      borderRadius: 20,
+      borderRadius: 20
     },
     statusIconBarDanger: {
       backgroundColor: 'red',
@@ -107,7 +111,7 @@ export default function ProfileScreen() {
       borderTopLeftRadius: 50,
       borderBottomLeftRadius: 50,
       borderTopRightRadius: 20,
-      borderBottomRightRadius: 20,
+      borderBottomRightRadius: 20
     },
     statusIconBarWaiting: {
       backgroundColor: 'orange',
@@ -119,7 +123,7 @@ export default function ProfileScreen() {
       borderTopLeftRadius: 50,
       borderBottomLeftRadius: 50,
       borderTopRightRadius: 20,
-      borderBottomRightRadius: 20,
+      borderBottomRightRadius: 20
     },
     statusIconBarSuccess: {
       backgroundColor: '#00C2FF',
@@ -131,7 +135,7 @@ export default function ProfileScreen() {
       borderTopLeftRadius: 50,
       borderBottomLeftRadius: 50,
       borderTopRightRadius: 20,
-      borderBottomRightRadius: 20,
+      borderBottomRightRadius: 20
     },
     statusIconDanger: {
       zIndex: 9,
@@ -171,7 +175,7 @@ export default function ProfileScreen() {
       zIndex: 4,
       marginTop: -120,
       marginLeft: -120,
-      color: 'white',
+      color: 'white'
     },
     status: {
       borderTopRightRadius: 20,
@@ -218,11 +222,16 @@ export default function ProfileScreen() {
     }
   })
 
+  const handleLogout = () => context.logout()
+
   return (
-    <ScrollView >
+    <ScrollView>
       <View style={styles.container}>
         <View style={styles.profileContainer}>
-          <Image source={require("../../assets/default.png")} style={styles.imgprofile} />
+          <Image
+            source={require('../../assets/default.png')}
+            style={styles.imgprofile}
+          />
           <Text style={styles.name}>Jagatditha</Text>
           <Text style={styles.nim}>1801020035</Text>
         </View>
@@ -232,11 +241,18 @@ export default function ProfileScreen() {
         <View style={styles.contentList}>
           <TouchableOpacity style={styles.barContent}>
             <View style={styles.cardImgWrapper}>
-              <Image source={require('../../assets/image.jpg')} resizeMode="cover" style={styles.cardImg} />
+              <Image
+                source={require('../../assets/image.jpg')}
+                resizeMode="cover"
+                style={styles.cardImg}
+              />
             </View>
             <View style={styles.transparnBar} />
             <View style={styles.statusIconBarWaiting}>
-              <Image source={require('../../assets/queue.png')} style={styles.statusIconWaiting} />
+              <Image
+                source={require('../../assets/queue.png')}
+                style={styles.statusIconWaiting}
+              />
             </View>
             <View style={styles.textContent}>
               <Text style={styles.h2}>Judul</Text>
@@ -250,11 +266,18 @@ export default function ProfileScreen() {
 
           <TouchableOpacity style={styles.barContent}>
             <View style={styles.cardImgWrapper}>
-              <Image source={require('../../assets/image.jpg')} resizeMode="cover" style={styles.cardImg} />
+              <Image
+                source={require('../../assets/image.jpg')}
+                resizeMode="cover"
+                style={styles.cardImg}
+              />
             </View>
             <View style={styles.transparnBar} />
             <View style={styles.statusIconBarSuccess}>
-              <Image source={require('../../assets/check.png')} style={styles.statusIconSuccess} />
+              <Image
+                source={require('../../assets/check.png')}
+                style={styles.statusIconSuccess}
+              />
             </View>
             <View style={styles.textContent}>
               <Text style={styles.h2}>Judul</Text>
@@ -268,11 +291,18 @@ export default function ProfileScreen() {
 
           <TouchableOpacity style={styles.barContent}>
             <View style={styles.cardImgWrapper}>
-              <Image source={require('../../assets/image.jpg')} resizeMode="cover" style={styles.cardImg} />
+              <Image
+                source={require('../../assets/image.jpg')}
+                resizeMode="cover"
+                style={styles.cardImg}
+              />
             </View>
             <View style={styles.transparnBar} />
             <View style={styles.statusIconBarDanger}>
-              <Image source={require('../../assets/reject.png')} style={styles.statusIconDanger} />
+              <Image
+                source={require('../../assets/reject.png')}
+                style={styles.statusIconDanger}
+              />
             </View>
             <View style={styles.textContent}>
               <Text style={styles.h2}>Judul</Text>
@@ -283,11 +313,20 @@ export default function ProfileScreen() {
               <Text style={styles.statusTextDanger}>Tidak Disetujui</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', paddingVertical: 8 }}>Log Out</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 20,
+                fontWeight: 'bold',
+                paddingVertical: 8
+              }}
+            >
+              Log Out
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView >
+    </ScrollView>
   )
 }
