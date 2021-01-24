@@ -84,7 +84,7 @@ export default function RootStackNavigation () {
     ;(async () => {
       let token
       try {
-        await AsyncStorage.removeItem('token')
+        // await AsyncStorage.removeItem('token')
         token = await AsyncStorage.getItem('token')
         dispatch({ type: 'REFRESH_TOKEN', token })
       } catch (err) {
