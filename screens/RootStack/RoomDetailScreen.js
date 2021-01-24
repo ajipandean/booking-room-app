@@ -11,6 +11,7 @@ import {
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Moment from 'moment'
+import { API_URL } from '@env'
 
 import useTheme from '../../hooks/useTheme'
 import RoomPicture from '../../components/RoomPicture'
@@ -80,7 +81,7 @@ export default function RoomDetailScreen () {
 
       const { data } = await axios({
         method: 'get',
-        url: `http://192.168.43.148:8000/api/room-detail/${id}`,
+        url: `${API_URL}/api/room-detail/${id}`,
         headers: {
           Authorization: `Bearer ${t}`
         }

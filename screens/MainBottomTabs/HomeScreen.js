@@ -12,6 +12,7 @@ import {
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { API_URL } from '@env'
 
 import banner from '../../assets/primakara.jpg'
 import useTheme from '../../hooks/useTheme'
@@ -34,7 +35,7 @@ export default function HomeScreen () {
       try {
         const { data } = await axios({
           method: 'get',
-          url: 'http://192.168.43.148:8000/api/category-list',
+          url: `${API_URL}/api/category-list`,
           headers: {
             Authorization: `Bearer ${t}`
           }
@@ -130,7 +131,7 @@ export default function HomeScreen () {
     try {
       const { data } = await axios({
         method: 'get',
-        url: `http://192.168.43.148:8000/api/room-list-${roomName}`,
+        url: `${API_URL}/api/room-list-${roomName}`,
         headers: {
           Authorization: `Bearer ${t}`
         }

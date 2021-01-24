@@ -12,6 +12,7 @@ import axios from 'axios'
 import Moment from 'moment'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { API_URL } from '@env'
 
 import useTheme from '../../hooks/useTheme'
 import AuthContext from '../../contexts/AuthContext'
@@ -27,6 +28,7 @@ export default function ProfileScreen () {
   const context = useContext(AuthContext)
 
   useEffect(() => {
+    console.log(API_URL)
     ;(async () => {
       setLoading(true)
       try {
@@ -34,7 +36,7 @@ export default function ProfileScreen () {
 
         const { data } = await axios({
           method: 'get',
-          url: 'http://192.168.43.148:8000/api/profile',
+          url: `${API_URL}/api/profile`,
           headers: {
             Authorization: `Bearer ${t}`
           }

@@ -11,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import Moment from 'moment'
+import { API_URL } from '@env'
 
 import useTheme from '../../hooks/useTheme'
 import RoomPicture from '../../components/RoomPicture'
@@ -71,7 +72,7 @@ export default function CreateBookingScreen () {
 
       const { data } = await axios({
         method: 'post',
-        url: 'http://192.168.43.148:8000/api/booking',
+        url: `${API_URL}/api/booking`,
         headers: {
           Authorization: `Bearer ${t}`
         },

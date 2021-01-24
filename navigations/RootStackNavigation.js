@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ToastAndroid } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { API_URL } from '@env'
 
 import MainBottomTabsNavigation from './MainBottomTabsNavigation'
 
@@ -95,13 +96,10 @@ export default function RootStackNavigation () {
   const authMemo = useMemo(() => ({
     register: async payload => {
       try {
-        const { data } = await axios.post(
-          'http://192.168.43.148:8000/api/register',
-          {
-            ...payload,
-            role: 'user'
-          }
-        )
+        const { data } = await axios.post(`${API_URL}/api/register`, {
+          ...payload,
+          role: 'user'
+        })
         ToastAndroid.show(data.message, ToastAndroid.LONG)
         if (data.statusCode === 200) return true
         return false
@@ -112,12 +110,9 @@ export default function RootStackNavigation () {
     },
     login: async payload => {
       try {
-        const { data } = await axios.post(
-          'http://192.168.43.148:8000/api/login',
-          {
-            ...payload
-          }
-        )
+        const { data } = await axios.post(`${API_URL}/api/login`, {
+          ...payload
+        })
         if (data.token) {
           const user = {
             id: data.id,
