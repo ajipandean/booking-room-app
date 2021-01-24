@@ -12,7 +12,7 @@ import {
 
 import useTheme from '../../hooks/useTheme'
 
-export default function LoginScreen () {
+export default function LoginScreen() {
   const { colors } = useTheme()
   const navigation = useNavigation()
 
