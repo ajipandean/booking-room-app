@@ -83,11 +83,9 @@ export default function RootStackNavigation () {
   useEffect(() => {
     ;(async () => {
       let token
-
       try {
-        // await AsyncStorage.removeItem('token')
+        await AsyncStorage.removeItem('token')
         token = await AsyncStorage.getItem('token')
-        console.log(token)
         dispatch({ type: 'REFRESH_TOKEN', token })
       } catch (err) {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
@@ -105,12 +103,11 @@ export default function RootStackNavigation () {
             role: 'user'
           }
         )
-
-        if (data.statusCode === 200) {
-          return true
-        }
+        ToastAndroid.show(data.message, ToastAndroid.LONG)
+        if (data.statusCode === 200) return true
         return false
       } catch (err) {
+        console.log(err)
         ToastAndroid.show(err.message, ToastAndroid.LONG)
       }
     },
@@ -122,11 +119,15 @@ export default function RootStackNavigation () {
             ...payload
           }
         )
-
         if (data.token) {
+          const user = {
+            id: data.id,
+            name: data.name,
+            nim: data.nim,
+            role: data.role
+          }
           await AsyncStorage.setItem('token', data.token)
-          await AsyncStorage.setItem('username', data.name)
-
+          await AsyncStorage.setItem('username', JSON.stringify(user))
           dispatch({ type: 'LOGIN', token: data.token })
         } else {
           throw new Error('Failed to login')
