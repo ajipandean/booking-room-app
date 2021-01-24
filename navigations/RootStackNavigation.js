@@ -82,11 +82,11 @@ export default function RootStackNavigation () {
   }, initialState)
 
   useEffect(() => {
+    console.log(API_URL)
     ;(async () => {
       let token
       try {
         token = await AsyncStorage.getItem('token')
-        console.log(token)
         dispatch({ type: 'REFRESH_TOKEN', token })
       } catch (err) {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
@@ -97,10 +97,13 @@ export default function RootStackNavigation () {
   const authMemo = useMemo(() => ({
     register: async payload => {
       try {
-        const { data } = await axios.post(`${API_URL}/api/register`, {
-          ...payload,
-          role: 'user'
-        })
+        const { data } = await axios.post(
+          'https://sibook.alihgae.com/api/register',
+          {
+            ...payload,
+            role: 'user'
+          }
+        )
         ToastAndroid.show(data.message, ToastAndroid.LONG)
         if (data.statusCode === 200) return true
         return false
@@ -111,9 +114,12 @@ export default function RootStackNavigation () {
     },
     login: async payload => {
       try {
-        const { data } = await axios.post(`${API_URL}/api/login`, {
-          ...payload
-        })
+        const { data } = await axios.post(
+          'https://sibook.alihgae.com/api/login',
+          {
+            ...payload
+          }
+        )
         if (data.token) {
           const user = {
             id: data.id,

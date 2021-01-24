@@ -11,7 +11,6 @@ import {
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Moment from 'moment'
-import { API_URL } from '@env'
 
 import useTheme from '../../hooks/useTheme'
 import RoomPicture from '../../components/RoomPicture'
@@ -81,7 +80,7 @@ export default function RoomDetailScreen () {
 
       const { data } = await axios({
         method: 'get',
-        url: `${API_URL}/api/room-detail/${id}`,
+        url: `https://sibook.alihgae.com/api/room-detail/${id}`,
         headers: {
           Authorization: `Bearer ${t}`
         }
@@ -113,11 +112,7 @@ export default function RoomDetailScreen () {
 
         <View style={{ marginBottom: 20, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
-            <RoomPicture
-              width="100%"
-              height={240}
-              uri="https://cintakasihtzuchi.sch.id/wp-content/uploads/2018/12/Aula-Lantai-2-Gedung-C.jpg"
-            />
+            <RoomPicture width="100%" height={240} uri={room.image_ruangan} />
           </View>
           <View style={{ marginLeft: 20 }}>
             {metas.map((m, i) => (

@@ -28,7 +28,6 @@ export default function ProfileScreen () {
   const context = useContext(AuthContext)
 
   useEffect(() => {
-    console.log(API_URL)
     ;(async () => {
       setLoading(true)
       try {
@@ -36,7 +35,7 @@ export default function ProfileScreen () {
 
         const { data } = await axios({
           method: 'get',
-          url: `${API_URL}/api/profile`,
+          url: 'https://sibook.alihgae.com/api/profile',
           headers: {
             Authorization: `Bearer ${t}`
           }
@@ -306,7 +305,15 @@ export default function ProfileScreen () {
             <>
               {user.peminjam.length <= 0
                 ? (
-                <Text>Anda tidak meminjam ruangan apapun.</Text>
+                <Text
+                  style={{
+                    marginBottom: 24,
+                    textAlign: 'center',
+                    color: colors.surface
+                  }}
+                >
+                  Anda tidak meminjam ruangan apapun.
+                </Text>
                   )
                 : (
                 <>
@@ -320,7 +327,7 @@ export default function ProfileScreen () {
                     >
                       <View style={styles.cardImgWrapper}>
                         <Image
-                          source={require('../../assets/image.jpg')}
+                          source={{ uri: p.room.image_ruangan }}
                           resizeMode="cover"
                           style={styles.cardImg}
                         />
