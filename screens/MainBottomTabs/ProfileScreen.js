@@ -276,7 +276,7 @@ export default function ProfileScreen () {
     }
   }
 
-  const handleLogout = () => context.logout()
+  const handleLogout = async () => await context.logout()
 
   const formattedBookingDate = (start, end) => {
     const startDate = Moment(start).format('lll')

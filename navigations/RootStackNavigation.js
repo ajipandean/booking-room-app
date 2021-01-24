@@ -86,6 +86,7 @@ export default function RootStackNavigation () {
       let token
       try {
         token = await AsyncStorage.getItem('token')
+        console.log(token)
         dispatch({ type: 'REFRESH_TOKEN', token })
       } catch (err) {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
@@ -130,8 +131,9 @@ export default function RootStackNavigation () {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
       }
     },
-    logout: () => {
+    logout: async () => {
       dispatch({ type: 'LOGOUT' })
+      await AsyncStorage.removeItem('token')
       ToastAndroid.show('Logout successfully', ToastAndroid.LONG)
     }
   }))
