@@ -70,6 +70,7 @@ export default function ProfileScreen() {
     },
     contentList: {
       marginTop: 15,
+      marginBottom: 55,
     },
     barContent: {
       marginBottom: 10,
@@ -204,6 +205,16 @@ export default function ProfileScreen() {
       paddingVertical: 4,
       paddingHorizontal: 10,
       paddingLeft: 20
+    },
+    button: {
+      marginHorizontal: '20%',
+      alignContent: 'center',
+      alignItems: 'center',
+      zIndex: 4,
+      width: 200,
+      height: 40,
+      borderRadius: 12,
+      backgroundColor: colors.otenticBlue
     }
   })
 
@@ -272,7 +283,9 @@ export default function ProfileScreen() {
               <Text style={styles.statusTextDanger}>Tidak Disetujui</Text>
             </View>
           </TouchableOpacity>
-
+          <TouchableOpacity style={styles.button}>
+            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', paddingVertical: 8 }}>Log Out</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView >
