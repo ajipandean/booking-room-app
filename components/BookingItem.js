@@ -16,7 +16,11 @@ export default function BookingItem ({
     container: {
       flexDirection: 'row',
       backgroundColor:
-        bookingStatus === 'disetujui' ? colors.secondary : colors.accent,
+        bookingStatus === 'disetujui'
+          ? colors.secondary
+          : bookingStatus === 'pending'
+            ? 'orange'
+            : colors.accent,
       borderRadius: 20,
       overflow: 'hidden',
       marginTop: spacedTop ? 18 : 0

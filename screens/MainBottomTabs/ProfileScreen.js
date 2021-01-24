@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   ToastAndroid
 } from 'react-native'
+import axios from 'axios'
+import Moment from 'moment'
+import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import useTheme from '../../hooks/useTheme'
@@ -16,6 +19,7 @@ import LoadingState from '../../components/LoadingState'
 
 export default function ProfileScreen () {
   const { colors } = useTheme()
+  const navigation = useNavigation()
 
   const [user, setUser] = useState({})
   const [isLoading, setLoading] = useState(false)
@@ -26,8 +30,17 @@ export default function ProfileScreen () {
     ;(async () => {
       setLoading(true)
       try {
-        const u = await AsyncStorage.getItem('user')
-        setUser(JSON.parse(u))
+        const t = await AsyncStorage.getItem('token')
+
+        const { data } = await axios({
+          method: 'get',
+          url: 'http://192.168.43.148:8000/api/profile',
+          headers: {
+            Authorization: `Bearer ${t}`
+          }
+        })
+
+        setUser(data[0])
       } catch (err) {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
       } finally {
@@ -192,6 +205,7 @@ export default function ProfileScreen () {
       borderRadius: 20
     },
     textContent: {
+      width: 240,
       zIndex: 4,
       marginTop: -120,
       marginLeft: -120,
@@ -242,7 +256,31 @@ export default function ProfileScreen () {
     }
   })
 
+  const statuses = {
+    disetujui: {
+      textColor: styles.statusTextSuccess,
+      iconColor: styles.statusIconBarSuccess,
+      icon: require('../../assets/check.png')
+    },
+    pending: {
+      textColor: styles.statusTextWait,
+      iconColor: styles.statusIconBarWaiting,
+      icon: require('../../assets/queue.png')
+    },
+    'belum disetujui': {
+      textColor: styles.statusTextDanger,
+      iconColor: styles.statusIconBarDanger,
+      icon: require('../../assets/reject.png')
+    }
+  }
+
   const handleLogout = () => context.logout()
+
+  const formattedBookingDate = (start, end) => {
+    const startDate = Moment(start).format('lll')
+    const endDate = Moment(end).format('lll')
+    return `${startDate} - ${endDate}`
+  }
 
   if (isLoading) return <LoadingState />
   return (
@@ -256,84 +294,61 @@ export default function ProfileScreen () {
           <Text style={styles.name}>{user.name}</Text>
           <Text style={styles.nim}>{user.nim}</Text>
         </View>
+
         <View style={styles.subTittle}>
           <Text style={styles.h2}>Status Peminjaman</Text>
         </View>
+
         <View style={styles.contentList}>
-          <TouchableOpacity style={styles.barContent}>
-            <View style={styles.cardImgWrapper}>
-              <Image
-                source={require('../../assets/image.jpg')}
-                resizeMode="cover"
-                style={styles.cardImg}
-              />
-            </View>
-            <View style={styles.transparnBar} />
-            <View style={styles.statusIconBarWaiting}>
-              <Image
-                source={require('../../assets/queue.png')}
-                style={styles.statusIconWaiting}
-              />
-            </View>
-            <View style={styles.textContent}>
-              <Text style={styles.h2}>Judul</Text>
-              <Text style={styles.h3}>Sub Judul</Text>
-              <Text style={styles.h3}>13 Januari | 14:00 -15:00</Text>
-            </View>
-            <View style={styles.status}>
-              <Text style={styles.statusTextWait}>Menunggu</Text>
-            </View>
-          </TouchableOpacity>
+          {user.peminjam && (
+            <>
+              {user.peminjam.length <= 0
+                ? (
+                <Text>Anda tidak meminjam ruangan apapun.</Text>
+                  )
+                : (
+                <>
+                  {user.peminjam.map((p, i) => (
+                    <TouchableOpacity
+                      key={i}
+                      style={styles.barContent}
+                      onPress={() =>
+                        navigation.navigate('room-detail', { id: p.room_id })
+                      }
+                    >
+                      <View style={styles.cardImgWrapper}>
+                        <Image
+                          source={require('../../assets/image.jpg')}
+                          resizeMode="cover"
+                          style={styles.cardImg}
+                        />
+                      </View>
+                      <View style={styles.transparnBar} />
+                      <View style={statuses[p.status].iconColor}>
+                        <Image
+                          source={statuses[p.status].icon}
+                          style={styles.statusIconWaiting}
+                        />
+                      </View>
+                      <View style={styles.textContent}>
+                        <Text style={styles.h2}>{p.room.nama_ruangan}</Text>
+                        <Text style={styles.h3}>{p.tujuan}</Text>
+                        <Text style={styles.h3}>
+                          {formattedBookingDate(p.tgl_pinjam, p.tgl_selesai)}
+                        </Text>
+                      </View>
+                      <View style={styles.status}>
+                        <Text style={statuses[p.status].textColor}>
+                          {p.status}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </>
+                  )}
+            </>
+          )}
 
-          <TouchableOpacity style={styles.barContent}>
-            <View style={styles.cardImgWrapper}>
-              <Image
-                source={require('../../assets/image.jpg')}
-                resizeMode="cover"
-                style={styles.cardImg}
-              />
-            </View>
-            <View style={styles.transparnBar} />
-            <View style={styles.statusIconBarSuccess}>
-              <Image
-                source={require('../../assets/check.png')}
-                style={styles.statusIconSuccess}
-              />
-            </View>
-            <View style={styles.textContent}>
-              <Text style={styles.h2}>Judul</Text>
-              <Text style={styles.h3}>Sub Judul</Text>
-              <Text style={styles.h3}>10 Januari | 14:00 -15:00</Text>
-            </View>
-            <View style={styles.status}>
-              <Text style={styles.statusTextSuccess}>Disetujui</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.barContent}>
-            <View style={styles.cardImgWrapper}>
-              <Image
-                source={require('../../assets/image.jpg')}
-                resizeMode="cover"
-                style={styles.cardImg}
-              />
-            </View>
-            <View style={styles.transparnBar} />
-            <View style={styles.statusIconBarDanger}>
-              <Image
-                source={require('../../assets/reject.png')}
-                style={styles.statusIconDanger}
-              />
-            </View>
-            <View style={styles.textContent}>
-              <Text style={styles.h2}>Judul</Text>
-              <Text style={styles.h3}>Sub Judul</Text>
-              <Text style={styles.h3}>10 Januari | 14:00 -15:00</Text>
-            </View>
-            <View style={styles.status}>
-              <Text style={styles.statusTextDanger}>Tidak Disetujui</Text>
-            </View>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleLogout}>
             <Text
               style={{
