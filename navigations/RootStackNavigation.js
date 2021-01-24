@@ -84,7 +84,6 @@ export default function RootStackNavigation () {
     ;(async () => {
       let token
       try {
-        // await AsyncStorage.removeItem('token')
         token = await AsyncStorage.getItem('token')
         dispatch({ type: 'REFRESH_TOKEN', token })
       } catch (err) {
@@ -127,7 +126,7 @@ export default function RootStackNavigation () {
             role: data.role
           }
           await AsyncStorage.setItem('token', data.token)
-          await AsyncStorage.setItem('username', JSON.stringify(user))
+          await AsyncStorage.setItem('user', JSON.stringify(user))
           dispatch({ type: 'LOGIN', token: data.token })
         } else {
           throw new Error('Failed to login')

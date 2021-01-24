@@ -1,20 +1,40 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   ScrollView,
   Text,
   StyleSheet,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ToastAndroid
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import useTheme from '../../hooks/useTheme'
 import AuthContext from '../../contexts/AuthContext'
+import LoadingState from '../../components/LoadingState'
 
 export default function ProfileScreen () {
   const { colors } = useTheme()
 
+  const [user, setUser] = useState({})
+  const [isLoading, setLoading] = useState(false)
+
   const context = useContext(AuthContext)
+
+  useEffect(() => {
+    ;(async () => {
+      setLoading(true)
+      try {
+        const u = await AsyncStorage.getItem('user')
+        setUser(JSON.parse(u))
+      } catch (err) {
+        ToastAndroid.show(err.message, ToastAndroid.LONG)
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [])
 
   const styles = StyleSheet.create({
     container: {
@@ -224,6 +244,7 @@ export default function ProfileScreen () {
 
   const handleLogout = () => context.logout()
 
+  if (isLoading) return <LoadingState />
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -232,8 +253,8 @@ export default function ProfileScreen () {
             source={require('../../assets/default.png')}
             style={styles.imgprofile}
           />
-          <Text style={styles.name}>Jagatditha</Text>
-          <Text style={styles.nim}>1801020035</Text>
+          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.nim}>{user.nim}</Text>
         </View>
         <View style={styles.subTittle}>
           <Text style={styles.h2}>Status Peminjaman</Text>
