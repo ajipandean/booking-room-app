@@ -342,7 +342,9 @@ export default function ProfileScreen () {
                     >
                       <View style={styles.cardImgWrapper}>
                         <Image
-                          source={{ uri: p.room.image_ruangan }}
+                          source={{
+                            uri: `https://sibook.alihgae.com/img/${p.room.image_ruangan}`
+                          }}
                           resizeMode="cover"
                           style={styles.cardImg}
                         />
