@@ -109,6 +109,8 @@ export default function RegisterScreen () {
         <Text style={styles.textTitle}>Pinjam Fasilitas</Text>
 
         <TextInput
+          autoCapitalize="none"
+          keyboardType="email-address"
           value={email}
           onChangeText={v => setEmail(v)}
           style={styles.inputText}
@@ -116,6 +118,7 @@ export default function RegisterScreen () {
           placeholderTextColor="#aaa"
         />
         <TextInput
+          autoCapitalize="words"
           value={name}
           onChangeText={v => setName(v)}
           style={styles.inputText}
@@ -123,6 +126,7 @@ export default function RegisterScreen () {
           placeholderTextColor="#aaa"
         />
         <TextInput
+          keyboardType="number-pad"
           value={nim}
           onChangeText={v => setNim(v)}
           style={styles.inputText}

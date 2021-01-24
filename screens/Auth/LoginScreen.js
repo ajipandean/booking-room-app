@@ -92,6 +92,7 @@ export default function LoginScreen () {
         <Text style={styles.textTitle}>Pinjam Fasilitas</Text>
 
         <TextInput
+          keyboardType="number-pad"
           value={nim}
           onChangeText={v => setNim(v)}
           style={styles.inputText}
