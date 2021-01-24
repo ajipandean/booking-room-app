@@ -3,6 +3,7 @@ import { useRoute, useNavigation } from '@react-navigation/native'
 import { ToastAndroid, ScrollView, Text, View, StyleSheet } from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Moment from 'moment'
 
 import useTheme from '../../hooks/useTheme'
 import RoomPicture from '../../components/RoomPicture'
@@ -74,6 +75,12 @@ export default function RoomDetailScreen () {
     }
   ]
 
+  const formattedBookingDate = (start, end) => {
+    const startDate = Moment(start).format('lll')
+    const endDate = Moment(end).format('lll')
+    return `${startDate} - ${endDate}`
+  }
+
   if (isLoading || !room) return <LoadingState />
   return (
     <ScrollView
@@ -132,10 +139,13 @@ export default function RoomDetailScreen () {
                   {room.peminjam.map((p, i) => (
                     <BookingItem
                       key={i}
-                      personName="Wawan Artawan"
-                      bookingPurpose="Rapat HIMA IF"
-                      bookingDate="Nov 22, 2021 11:00 - Nov 22, 2021 12:00"
-                      bookingStatus="disetujui"
+                      personName={p.user.name}
+                      bookingPurpose={p.tujuan}
+                      bookingDate={formattedBookingDate(
+                        p.tgl_pinjam,
+                        p.tgl_selesai
+                      )}
+                      bookingStatus={p.status}
                     />
                   ))}
                 </>
