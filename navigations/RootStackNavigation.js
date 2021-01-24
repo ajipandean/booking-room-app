@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ToastAndroid } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { API_URL } from '@env'
 
 import MainBottomTabsNavigation from './MainBottomTabsNavigation'
 
@@ -81,6 +82,7 @@ export default function RootStackNavigation () {
   }, initialState)
 
   useEffect(() => {
+    console.log(API_URL)
     ;(async () => {
       let token
       try {
@@ -96,7 +98,7 @@ export default function RootStackNavigation () {
     register: async payload => {
       try {
         const { data } = await axios.post(
-          'http://192.168.43.148:8000/api/register',
+          'https://sibook.alihgae.com/api/register',
           {
             ...payload,
             role: 'user'
@@ -113,7 +115,7 @@ export default function RootStackNavigation () {
     login: async payload => {
       try {
         const { data } = await axios.post(
-          'http://192.168.43.148:8000/api/login',
+          'https://sibook.alihgae.com/api/login',
           {
             ...payload
           }
@@ -135,8 +137,9 @@ export default function RootStackNavigation () {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
       }
     },
-    logout: () => {
+    logout: async () => {
       dispatch({ type: 'LOGOUT' })
+      await AsyncStorage.removeItem('token')
       ToastAndroid.show('Logout successfully', ToastAndroid.LONG)
     }
   }))

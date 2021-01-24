@@ -7,7 +7,8 @@ import {
   Image,
   TouchableOpacity,
   ToastAndroid,
-  ActivityIndicator
+  ActivityIndicator,
+  RefreshControl
 } from 'react-native'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -21,6 +22,7 @@ export default function HomeScreen () {
 
   const navigation = useNavigation()
 
+  const [refreshing, setRefreshing] = useState(false)
   const [currentItems, setCurrentItems] = useState('seminar')
   const [categories, setCategories] = useState([])
   const [categoryLoading, setCategoryLoading] = useState(false)
@@ -29,35 +31,8 @@ export default function HomeScreen () {
 
   useEffect(() => {
     ;(async () => {
-      setCategoryLoading(true)
-      const t = await AsyncStorage.getItem('token')
-      try {
-        const { data } = await axios({
-          method: 'get',
-          url: 'http://192.168.43.148:8000/api/category-list',
-          headers: {
-            Authorization: `Bearer ${t}`
-          }
-        })
-        setCategories(data)
-      } catch (err) {
-        ToastAndroid.show(err.message, ToastAndroid.LONG)
-      } finally {
-        setCategoryLoading(false)
-      }
-    })()
-  }, [])
-
-  useEffect(() => {
-    ;(async () => {
-      setRoomItemsLoading(true)
-      try {
-        await handleChangeRoomItems('seminar')
-      } catch (err) {
-        ToastAndroid.show(err.message, ToastAndroid.LONG)
-      } finally {
-        setRoomItemsLoading(false)
-      }
+      await handleFetchCategories()
+      await handleFetchRoomItems()
     })()
   }, [])
 
@@ -124,13 +99,50 @@ export default function HomeScreen () {
     }
   })
 
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await handleFetchCategories()
+    await handleFetchRoomItems()
+    setRefreshing(false)
+  }
+
+  const handleFetchRoomItems = async () => {
+    setRoomItemsLoading(true)
+    try {
+      await handleChangeRoomItems('seminar')
+    } catch (err) {
+      ToastAndroid.show(err.message, ToastAndroid.LONG)
+    } finally {
+      setRoomItemsLoading(false)
+    }
+  }
+
+  const handleFetchCategories = async () => {
+    setCategoryLoading(true)
+    const t = await AsyncStorage.getItem('token')
+    try {
+      const { data } = await axios({
+        method: 'get',
+        url: 'https://sibook.alihgae.com/api/category-list',
+        headers: {
+          Authorization: `Bearer ${t}`
+        }
+      })
+      setCategories(data)
+    } catch (err) {
+      ToastAndroid.show(err.message, ToastAndroid.LONG)
+    } finally {
+      setCategoryLoading(false)
+    }
+  }
+
   const handleChangeRoomItems = async roomName => {
     setRoomItemsLoading(true)
     const t = await AsyncStorage.getItem('token')
     try {
       const { data } = await axios({
         method: 'get',
-        url: `http://192.168.43.148:8000/api/room-list-${roomName}`,
+        url: `https://sibook.alihgae.com/api/room-list-${roomName}`,
         headers: {
           Authorization: `Bearer ${t}`
         }
@@ -149,6 +161,9 @@ export default function HomeScreen () {
     <ScrollView
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 28 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
     >
       <View style={styles.imgWrapper}>
         <Image source={banner} style={styles.img} />
@@ -248,7 +263,7 @@ export default function HomeScreen () {
                           left: 0
                         })
                       }
-                      source={r.image_ruangan && banner}
+                      source={{ uri: r.image_ruangan }}
                     />
                     <View style={styles.transparnBar} />
                     <Text

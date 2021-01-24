@@ -6,7 +6,8 @@ import {
   ScrollView,
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  RefreshControl
 } from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -27,6 +28,7 @@ export default function RoomDetailScreen () {
   const [id] = useState(route.params.id)
   const [room, setRoom] = useState({})
   const [isLoading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
     DeviceEventEmitter.addListener('create-booking', handleFetchRoomDetail)
@@ -73,6 +75,12 @@ export default function RoomDetailScreen () {
     }
   ]
 
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await handleFetchRoomDetail(id)
+    setRefreshing(false)
+  }
+
   const handleFetchRoomDetail = async roomId => {
     setLoading(true)
     try {
@@ -80,7 +88,7 @@ export default function RoomDetailScreen () {
 
       const { data } = await axios({
         method: 'get',
-        url: `http://192.168.43.148:8000/api/room-detail/${id}`,
+        url: `https://sibook.alihgae.com/api/room-detail/${id}`,
         headers: {
           Authorization: `Bearer ${t}`
         }
@@ -104,6 +112,9 @@ export default function RoomDetailScreen () {
     <ScrollView
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 16 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
     >
       <View style={{ paddingHorizontal: 16 }}>
         <Text style={[styles.white_text, styles.title]}>
@@ -112,11 +123,7 @@ export default function RoomDetailScreen () {
 
         <View style={{ marginBottom: 20, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
-            <RoomPicture
-              width="100%"
-              height={240}
-              uri="https://cintakasihtzuchi.sch.id/wp-content/uploads/2018/12/Aula-Lantai-2-Gedung-C.jpg"
-            />
+            <RoomPicture width="100%" height={240} uri={room.image_ruangan} />
           </View>
           <View style={{ marginLeft: 20 }}>
             {metas.map((m, i) => (

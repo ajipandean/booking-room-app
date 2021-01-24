@@ -6,7 +6,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ToastAndroid
+  ToastAndroid,
+  RefreshControl
 } from 'react-native'
 import axios from 'axios'
 import Moment from 'moment'
@@ -23,31 +24,42 @@ export default function ProfileScreen () {
 
   const [user, setUser] = useState({})
   const [isLoading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   const context = useContext(AuthContext)
 
   useEffect(() => {
     ;(async () => {
-      setLoading(true)
-      try {
-        const t = await AsyncStorage.getItem('token')
-
-        const { data } = await axios({
-          method: 'get',
-          url: 'http://192.168.43.148:8000/api/profile',
-          headers: {
-            Authorization: `Bearer ${t}`
-          }
-        })
-
-        setUser(data[0])
-      } catch (err) {
-        ToastAndroid.show(err.message, ToastAndroid.LONG)
-      } finally {
-        setLoading(false)
-      }
+      await handleFetchProfile()
     })()
   }, [])
+
+  const handleFetchProfile = async () => {
+    setLoading(true)
+    try {
+      const t = await AsyncStorage.getItem('token')
+
+      const { data } = await axios({
+        method: 'get',
+        url: 'https://sibook.alihgae.com/api/profile',
+        headers: {
+          Authorization: `Bearer ${t}`
+        }
+      })
+
+      setUser(data[0])
+    } catch (err) {
+      ToastAndroid.show(err.message, ToastAndroid.LONG)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await handleFetchProfile()
+    setRefreshing(false)
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -274,7 +286,7 @@ export default function ProfileScreen () {
     }
   }
 
-  const handleLogout = () => context.logout()
+  const handleLogout = async () => await context.logout()
 
   const formattedBookingDate = (start, end) => {
     const startDate = Moment(start).format('lll')
@@ -284,7 +296,11 @@ export default function ProfileScreen () {
 
   if (isLoading) return <LoadingState />
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
+    >
       <View style={styles.container}>
         <View style={styles.profileContainer}>
           <Image
@@ -304,7 +320,15 @@ export default function ProfileScreen () {
             <>
               {user.peminjam.length <= 0
                 ? (
-                <Text>Anda tidak meminjam ruangan apapun.</Text>
+                <Text
+                  style={{
+                    marginBottom: 24,
+                    textAlign: 'center',
+                    color: colors.surface
+                  }}
+                >
+                  Anda tidak meminjam ruangan apapun.
+                </Text>
                   )
                 : (
                 <>
@@ -318,7 +342,7 @@ export default function ProfileScreen () {
                     >
                       <View style={styles.cardImgWrapper}>
                         <Image
-                          source={require('../../assets/image.jpg')}
+                          source={{ uri: p.room.image_ruangan }}
                           resizeMode="cover"
                           style={styles.cardImg}
                         />

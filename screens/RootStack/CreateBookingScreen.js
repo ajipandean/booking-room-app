@@ -71,7 +71,7 @@ export default function CreateBookingScreen () {
 
       const { data } = await axios({
         method: 'post',
-        url: 'http://192.168.43.148:8000/api/booking',
+        url: 'https://sibook.alihgae.com/api/booking',
         headers: {
           Authorization: `Bearer ${t}`
         },
@@ -108,11 +108,7 @@ export default function CreateBookingScreen () {
         </Text>
 
         <View style={{ marginBottom: 16 }}>
-          <RoomPicture
-            width="100%"
-            height={170}
-            uri="https://cintakasihtzuchi.sch.id/wp-content/uploads/2018/12/Aula-Lantai-2-Gedung-C.jpg"
-          />
+          <RoomPicture width="100%" height={170} uri={room.image_ruangan} />
         </View>
       </View>
 
