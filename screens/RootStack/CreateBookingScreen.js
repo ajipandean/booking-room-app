@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRoute } from '@react-navigation/native'
 import { ScrollView, Text, StyleSheet, View } from 'react-native'
 
 import useTheme from '../../hooks/useTheme'
@@ -10,7 +11,9 @@ import Button from '../../components/Button'
 
 export default function CreateBookingScreen () {
   const { colors } = useTheme()
+  const route = useRoute()
 
+  const [room] = useState(route.params.room)
   const [bookingPurpose, setBookingPurpose] = useState('')
   const [additionalTools, setAdditionalTools] = useState('')
   const [startDateTime, setStartDateTime] = useState(new Date())
@@ -19,12 +22,22 @@ export default function CreateBookingScreen () {
   const metas = [
     {
       icon: 'account-group',
-      stats: 200,
+      stats: room.kapasitas_ruangan,
       label: 'Kapasitas',
       spacedLeft: false
     },
-    { icon: 'projector', stats: 2, label: 'Proyektor', spacedLeft: true },
-    { icon: 'theater', stats: 1, label: 'Panggung', spacedLeft: true }
+    {
+      icon: 'projector',
+      stats: room.proyektor,
+      label: 'Proyektor',
+      spacedLeft: true
+    },
+    {
+      icon: 'theater',
+      stats: room.panggung,
+      label: 'Panggung',
+      spacedLeft: true
+    }
   ]
 
   const styles = StyleSheet.create({
@@ -43,7 +56,9 @@ export default function CreateBookingScreen () {
       contentContainerStyle={{ paddingBottom: 16 }}
     >
       <View style={{ paddingHorizontal: 16 }}>
-        <Text style={[styles.white_text, styles.title]}>AULA</Text>
+        <Text style={[styles.white_text, styles.title]}>
+          {room.nama_ruangan}
+        </Text>
 
         <View style={{ marginBottom: 16 }}>
           <RoomPicture

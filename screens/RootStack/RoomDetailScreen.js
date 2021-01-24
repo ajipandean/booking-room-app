@@ -1,14 +1,47 @@
-import React from 'react'
-import { ScrollView, Text, View, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useRoute, useNavigation } from '@react-navigation/native'
+import { ToastAndroid, ScrollView, Text, View, StyleSheet } from 'react-native'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import useTheme from '../../hooks/useTheme'
 import RoomPicture from '../../components/RoomPicture'
 import RoomMeta from '../../components/RoomMeta'
 import Button from '../../components/Button'
 import BookingItem from '../../components/BookingItem'
+import LoadingState from '../../components/LoadingState'
 
 export default function RoomDetailScreen () {
   const { colors } = useTheme()
+  const route = useRoute()
+  const navigation = useNavigation()
+
+  const [id] = useState(route.params.id)
+  const [room, setRoom] = useState({})
+  const [isLoading, setLoading] = useState(false)
+
+  useEffect(() => {
+    ;(async () => {
+      setLoading(true)
+      console.log(id)
+      try {
+        const t = await AsyncStorage.getItem('token')
+
+        const { data } = await axios({
+          method: 'get',
+          url: `http://192.168.43.148:8000/api/room-detail/${id}`,
+          headers: {
+            Authorization: `Bearer ${t}`
+          }
+        })
+        setRoom(data[0])
+      } catch (err) {
+        ToastAndroid.show(err.message, ToastAndroid.LONG)
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [])
 
   const styles = StyleSheet.create({
     container: {
@@ -23,21 +56,34 @@ export default function RoomDetailScreen () {
   const metas = [
     {
       icon: 'account-group',
-      stats: 200,
+      stats: room.kapasitas_ruangan,
       label: 'Kapasitas',
       spacedTop: false
     },
-    { icon: 'projector', stats: 2, label: 'Proyektor', spacedTop: true },
-    { icon: 'theater', stats: 1, label: 'Panggung', spacedTop: true }
+    {
+      icon: 'projector',
+      stats: room.proyektor,
+      label: 'Proyektor',
+      spacedTop: true
+    },
+    {
+      icon: 'theater',
+      stats: room.panggung,
+      label: 'Panggung',
+      spacedTop: true
+    }
   ]
 
+  if (isLoading || !room) return <LoadingState />
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 16 }}
     >
       <View style={{ paddingHorizontal: 16 }}>
-        <Text style={[styles.white_text, styles.title]}>AULA</Text>
+        <Text style={[styles.white_text, styles.title]}>
+          {room.nama_ruangan}
+        </Text>
 
         <View style={{ marginBottom: 20, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
@@ -65,7 +111,7 @@ export default function RoomDetailScreen () {
           text="Pinjam"
           textColor="primary"
           bgColor="warning"
-          onPress={() => console.log('Pinjam clicked.')}
+          onPress={() => navigation.navigate('create-booking', { room })}
         />
 
         <View style={{ marginTop: 24 }}>
@@ -73,26 +119,29 @@ export default function RoomDetailScreen () {
             Informasi Peminjaman
           </Text>
 
-          <BookingItem
-            personName="Wawan Artawan"
-            bookingPurpose="Rapat HIMA IF"
-            bookingDate="Nov 22, 2021 11:00 - Nov 22, 2021 12:00"
-            bookingStatus="disetujui"
-          />
-          <BookingItem
-            spacedTop
-            personName="Deva Rananda"
-            bookingPurpose="Gladi UKM Musik"
-            bookingDate="Nov 20, 2021 09:00 - Nov 20, 2021 11:00"
-            bookingStatus="belum disetujui"
-          />
-          <BookingItem
-            spacedTop
-            personName="Wawan Artawan"
-            bookingPurpose="Rapat HIMA IF"
-            bookingDate="Nov 22, 2021 11:00 - Nov 22, 2021 12:00"
-            bookingStatus="disetujui"
-          />
+          {room.peminjam && (
+            <>
+              {room.peminjam.length <= 0
+                ? (
+                <Text style={{ color: colors.surface }}>
+                  Belum ada yang meminjam ruangan ini.
+                </Text>
+                  )
+                : (
+                <>
+                  {room.peminjam.map((p, i) => (
+                    <BookingItem
+                      key={i}
+                      personName="Wawan Artawan"
+                      bookingPurpose="Rapat HIMA IF"
+                      bookingDate="Nov 22, 2021 11:00 - Nov 22, 2021 12:00"
+                      bookingStatus="disetujui"
+                    />
+                  ))}
+                </>
+                  )}
+            </>
+          )}
         </View>
       </View>
     </ScrollView>
