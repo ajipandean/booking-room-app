@@ -6,13 +6,13 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ToastAndroid
+  ToastAndroid,
+  RefreshControl
 } from 'react-native'
 import axios from 'axios'
 import Moment from 'moment'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { API_URL } from '@env'
 
 import useTheme from '../../hooks/useTheme'
 import AuthContext from '../../contexts/AuthContext'
@@ -24,31 +24,42 @@ export default function ProfileScreen () {
 
   const [user, setUser] = useState({})
   const [isLoading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   const context = useContext(AuthContext)
 
   useEffect(() => {
     ;(async () => {
-      setLoading(true)
-      try {
-        const t = await AsyncStorage.getItem('token')
-
-        const { data } = await axios({
-          method: 'get',
-          url: 'https://sibook.alihgae.com/api/profile',
-          headers: {
-            Authorization: `Bearer ${t}`
-          }
-        })
-
-        setUser(data[0])
-      } catch (err) {
-        ToastAndroid.show(err.message, ToastAndroid.LONG)
-      } finally {
-        setLoading(false)
-      }
+      await handleFetchProfile()
     })()
   }, [])
+
+  const handleFetchProfile = async () => {
+    setLoading(true)
+    try {
+      const t = await AsyncStorage.getItem('token')
+
+      const { data } = await axios({
+        method: 'get',
+        url: 'https://sibook.alihgae.com/api/profile',
+        headers: {
+          Authorization: `Bearer ${t}`
+        }
+      })
+
+      setUser(data[0])
+    } catch (err) {
+      ToastAndroid.show(err.message, ToastAndroid.LONG)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await handleFetchProfile()
+    setRefreshing(false)
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -285,7 +296,11 @@ export default function ProfileScreen () {
 
   if (isLoading) return <LoadingState />
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
+    >
       <View style={styles.container}>
         <View style={styles.profileContainer}>
           <Image

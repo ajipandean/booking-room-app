@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   ScrollView,
@@ -13,7 +13,6 @@ import {
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { API_URL } from '@env'
 
 import banner from '../../assets/primakara.jpg'
 import useTheme from '../../hooks/useTheme'
@@ -31,7 +30,6 @@ export default function HomeScreen () {
   const [roomItemsLoading, setRoomItemsLoading] = useState(false)
 
   useEffect(() => {
-    console.log(API_URL)
     ;(async () => {
       await handleFetchCategories()
       await handleFetchRoomItems()
@@ -101,6 +99,13 @@ export default function HomeScreen () {
     }
   })
 
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await handleFetchCategories()
+    await handleFetchRoomItems()
+    setRefreshing(false)
+  }
+
   const handleFetchRoomItems = async () => {
     setRoomItemsLoading(true)
     try {
@@ -156,6 +161,9 @@ export default function HomeScreen () {
     <ScrollView
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 28 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
     >
       <View style={styles.imgWrapper}>
         <Image source={banner} style={styles.img} />
