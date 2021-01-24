@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { ToastAndroid, ScrollView, Text, View, StyleSheet } from 'react-native'
+import {
+  DeviceEventEmitter,
+  ToastAndroid,
+  ScrollView,
+  Text,
+  View,
+  StyleSheet
+} from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Moment from 'moment'
@@ -22,25 +29,16 @@ export default function RoomDetailScreen () {
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
-    ;(async () => {
-      setLoading(true)
-      console.log(id)
-      try {
-        const t = await AsyncStorage.getItem('token')
+    DeviceEventEmitter.addListener('create-booking', handleFetchRoomDetail)
 
-        const { data } = await axios({
-          method: 'get',
-          url: `http://192.168.43.148:8000/api/room-detail/${id}`,
-          headers: {
-            Authorization: `Bearer ${t}`
-          }
-        })
-        setRoom(data[0])
-      } catch (err) {
-        ToastAndroid.show(err.message, ToastAndroid.LONG)
-      } finally {
-        setLoading(false)
-      }
+    return () => {
+      DeviceEventEmitter.removeListener('create-booking')
+    }
+  }, [])
+
+  useEffect(() => {
+    ;(async () => {
+      await handleFetchRoomDetail(id)
     })()
   }, [])
 
@@ -74,6 +72,26 @@ export default function RoomDetailScreen () {
       spacedTop: true
     }
   ]
+
+  const handleFetchRoomDetail = async roomId => {
+    setLoading(true)
+    try {
+      const t = await AsyncStorage.getItem('token')
+
+      const { data } = await axios({
+        method: 'get',
+        url: `http://192.168.43.148:8000/api/room-detail/${id}`,
+        headers: {
+          Authorization: `Bearer ${t}`
+        }
+      })
+      setRoom(data[0])
+    } catch (err) {
+      ToastAndroid.show(err.message, ToastAndroid.LONG)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const formattedBookingDate = (start, end) => {
     const startDate = Moment(start).format('lll')
@@ -146,6 +164,7 @@ export default function RoomDetailScreen () {
                         p.tgl_selesai
                       )}
                       bookingStatus={p.status}
+                      spacedTop={i > 0}
                     />
                   ))}
                 </>

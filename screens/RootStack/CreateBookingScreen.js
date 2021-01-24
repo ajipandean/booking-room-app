@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { ToastAndroid, ScrollView, Text, StyleSheet, View } from 'react-native'
+import {
+  DeviceEventEmitter,
+  ToastAndroid,
+  ScrollView,
+  Text,
+  StyleSheet,
+  View
+} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import Moment from 'moment'
@@ -79,6 +86,7 @@ export default function CreateBookingScreen () {
 
       if (data.statusCode === 200) {
         navigation.navigate('room-detail')
+        DeviceEventEmitter.emit('create-booking', room.id)
       } else {
         throw new Error('Error occurred')
       }
