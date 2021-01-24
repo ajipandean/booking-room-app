@@ -57,7 +57,7 @@ const rootStackScreens = [
   }
 ]
 
-export default function RootStackNavigation () {
+export default function RootStackNavigation() {
   const { colors } = useTheme()
 
   const [state, dispatch] = useReducer((prevState, action) => {

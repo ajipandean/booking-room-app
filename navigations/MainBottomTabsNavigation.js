@@ -26,7 +26,7 @@ const screens = [
   }
 ]
 
-export default function MainBottomTabsNavigation () {
+export default function MainBottomTabsNavigation() {
   return (
     <Navigator
       tabBarOptions={{

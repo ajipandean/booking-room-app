@@ -1,18 +1,17 @@
 import React from 'react'
 import {
-  View, 
-  ScrollView, 
-  Text, 
-  StyleSheet, 
-  Image, 
-  TouchableOpacity,
-  ImageBackground
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity
 } from 'react-native'
 
 import banner from '../../assets/primakara.jpg'
 import useTheme from '../../hooks/useTheme'
 
-export default function HomeScreen () {
+export default function HomeScreen() {
   const { colors } = useTheme()
 
   const styles = StyleSheet.create({
@@ -29,15 +28,17 @@ export default function HomeScreen () {
       overflow: 'hidden'
     },
     img: {
-      width:'100%',
+      width: '100%',
       height: '100%',
-      resizeMode: 'cover'
+      resizeMode: 'cover',
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
     },
     imgText: {
       position: 'absolute',
       bottom: 37,
       left: 37,
-      fontSize: 24,
+      fontSize: 33,
       color: colors.surface,
       width: 255,
       fontWeight: 'bold'
@@ -67,11 +68,18 @@ export default function HomeScreen () {
     roomText: {
       color: 'white',
       marginLeft: 20
-    }
+    },
+    transparnBar: {
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'black',
+      opacity: 0.5,
+      borderRadius: 20
+    },
   })
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{paddingBottom : 28}}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 28 }}>
 
       <View style={styles.imgWrapper}>
         <Image source={banner} style={styles.img} />
@@ -84,79 +92,83 @@ export default function HomeScreen () {
       <View style={styles.borderCategory}>
         <TouchableOpacity style={styles.category}>
           <Text style={styles.categoryText}>
-              Meeting
+            Meeting
           </Text>
         </TouchableOpacity>
 
         {/* category */}
         <TouchableOpacity style={styles.category}>
           <Text style={styles.categoryText}>
-              Seminar
+            Seminar
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.category}>
           <Text style={styles.categoryText}>
-              Workshop
+            Workshop
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{padding : 27}}>
-        <TouchableOpacity style={{width : '100%', height : 122, position : 'relative', borderRadius : 20, overflow : 'hidden'}}>
-          <Image style={{width : '100%', height : '100%', resizeMode : 'cover', position : 'absolute', top : 0, left : 0}} source={banner}/>
-          <Text style={[styles.roomText, {fontSize : 17, fontWeight : 'bold', marginTop : 20}]}>
-              RUANG MEETING LANTAI 2
+      <View style={{ padding: 27 }}>
+        <TouchableOpacity style={{ width: '100%', height: 122, position: 'relative', borderRadius: 20, overflow: 'hidden' }}>
+          <Image style={styles.img, { width: '100%', height: '100%', resizeMode: 'cover', position: 'absolute', top: 0, left: 0 }} source={banner} />
+          <View style={styles.transparnBar} />
+          <Text style={[styles.roomText, { fontSize: 20, fontWeight: 'bold', marginTop: -100 }]}>
+            Ruang Meeting Lantai 2
           </Text>
           <Text style={styles.roomText}>
-              10 Orang|AC|Kursi|Proyektor
+            10 Orang | AC | Kursi | Proyektor
           </Text>
-          <View style={{backgroundColor : 'white', position : 'absolute', bottom : 0, paddingHorizontal : 12, paddingVertical : 4, borderTopRightRadius : 100, borderBottomRightRadius : 100}}>
-            <Text style={{color : 'blue'}}>
+          <View style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, paddingHorizontal: 12, paddingVertical: 4, borderTopRightRadius: 100, borderBottomRightRadius: 100 }}>
+            <Text style={{ color: colors.otenticBlue, fontSize: 18, paddingHorizontal: 10 }}>
               Tersedia
             </Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width : '100%', height : 122, position : 'relative', borderRadius : 20, overflow : 'hidden', marginTop : 28}}>
-          <Image style={{width : '100%', height : '100%', resizeMode : 'cover', position : 'absolute', top : 0, left : 0}} source={banner}/>
-          <Text style={[styles.roomText, {fontSize : 17, fontWeight : 'bold', marginTop : 20}]}>
-              Classroom 3A
+        <TouchableOpacity style={{ width: '100%', height: 122, position: 'relative', borderRadius: 20, overflow: 'hidden', marginTop: 28 }}>
+          <Image style={{ width: '100%', height: '100%', resizeMode: 'cover', position: 'absolute', top: 0, left: 0 }} source={banner} />
+          <View style={styles.transparnBar} />
+          <Text style={[styles.roomText, { fontSize: 20, fontWeight: 'bold', marginTop: -100 }]}>
+            Classroom 3A
           </Text>
           <Text style={styles.roomText}>
-              20 Orang|AC|Kursi|Proyektor|...
+            20 Orang | AC | Kursi | Proyektor | ...
           </Text>
-          <View style={{backgroundColor : 'white', position : 'absolute', bottom : 0, paddingHorizontal : 12, paddingVertical : 4, borderTopRightRadius : 100, borderBottomRightRadius : 100}}>
-            <Text style={{color : 'blue'}}>
-              Tersedia
-            </Text>
-          </View>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={{width : '100%', height : 122, position : 'relative', borderRadius : 20, overflow : 'hidden', marginTop : 28}}>
-          <Image style={{width : '100%', height : '100%', resizeMode : 'cover', position : 'absolute', top : 0, left : 0}} source={banner}/>
-          <Text style={[styles.roomText, {fontSize : 17, fontWeight : 'bold', marginTop : 20}]}>
-              Classroom 3B
-          </Text>
-          <Text style={styles.roomText}>
-              20 Orang|AC|Kursi|Proyektor
-          </Text>
-          <View style={{backgroundColor : 'white', position : 'absolute', bottom : 0, paddingHorizontal : 12, paddingVertical : 4, borderTopRightRadius : 100, borderBottomRightRadius : 100}}>
-            <Text style={{color : 'blue'}}>
+          <View style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, paddingHorizontal: 12, paddingVertical: 4, borderTopRightRadius: 100, borderBottomRightRadius: 100 }}>
+            <Text style={{ color: colors.otenticBlue, fontSize: 18, paddingHorizontal: 10 }}>
               Tersedia
             </Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width : '100%', height : 122, position : 'relative', borderRadius : 20, overflow : 'hidden', marginTop : 28}}>
-          <Image style={{width : '100%', height : '100%', resizeMode : 'cover', position : 'absolute', top : 0, left : 0}} source={banner}/>
-          <Text style={[styles.roomText, {fontSize : 17, fontWeight : 'bold', marginTop : 20}]}>
-              Aula
+        <TouchableOpacity style={{ width: '100%', height: 122, position: 'relative', borderRadius: 20, overflow: 'hidden', marginTop: 28 }}>
+          <Image style={{ width: '100%', height: '100%', resizeMode: 'cover', position: 'absolute', top: 0, left: 0 }} source={banner} />
+          <View style={styles.transparnBar} />
+          <Text style={[styles.roomText, { fontSize: 20, fontWeight: 'bold', marginTop: -100 }]}>
+            Classroom 3B
           </Text>
           <Text style={styles.roomText}>
-              50 Orang|Panggung|AC|Kursi|...
+            20 Orang | AC | Kursi | Proyektor
           </Text>
-          <View style={{backgroundColor : 'white', position : 'absolute', bottom : 0, paddingHorizontal : 12, paddingVertical : 4, borderTopRightRadius : 100, borderBottomRightRadius : 100}}>
-            <Text style={{color : 'blue'}}>
+          <View style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, paddingHorizontal: 12, paddingVertical: 4, borderTopRightRadius: 100, borderBottomRightRadius: 100 }}>
+            <Text style={{ color: colors.otenticBlue, fontSize: 18, paddingHorizontal: 10 }}>
+              Tersedia
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{ width: '100%', height: 122, position: 'relative', borderRadius: 20, overflow: 'hidden', marginTop: 28 }}>
+          <Image style={{ width: '100%', height: '100%', resizeMode: 'cover', position: 'absolute', top: 0, left: 0 }} source={banner} />
+          <View style={styles.transparnBar} />
+          <Text style={[styles.roomText, { fontSize: 20, fontWeight: 'bold', marginTop: -100 }]}>
+            Aula
+          </Text>
+          <Text style={styles.roomText}>
+            50 Orang | Panggung | AC | Kursi | ...
+          </Text>
+          <View style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, paddingHorizontal: 12, paddingVertical: 4, borderTopRightRadius: 100, borderBottomRightRadius: 100 }}>
+            <Text style={{ color: colors.otenticBlue, fontSize: 18, paddingHorizontal: 10 }}>
               Tersedia
             </Text>
           </View>

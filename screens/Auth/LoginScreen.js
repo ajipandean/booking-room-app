@@ -14,7 +14,7 @@ import {
 import useTheme from '../../hooks/useTheme'
 import AuthContext from '../../contexts/AuthContext'
 
-export default function LoginScreen () {
+export default function LoginScreen() {
   const { colors } = useTheme()
   const navigation = useNavigation()
   const context = useContext(AuthContext)
