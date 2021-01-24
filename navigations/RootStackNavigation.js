@@ -57,7 +57,7 @@ const rootStackScreens = [
   }
 ]
 
-export default function RootStackNavigation() {
+export default function RootStackNavigation () {
   const { colors } = useTheme()
 
   const [state, dispatch] = useReducer((prevState, action) => {
@@ -135,6 +135,10 @@ export default function RootStackNavigation() {
       } catch (err) {
         ToastAndroid.show(err.message, ToastAndroid.LONG)
       }
+    },
+    logout: () => {
+      dispatch({ type: 'LOGOUT' })
+      ToastAndroid.show('Logout successfully', ToastAndroid.LONG)
     }
   }))
 
